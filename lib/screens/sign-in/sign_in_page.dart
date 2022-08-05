@@ -27,7 +27,7 @@ class SignInPage extends StatelessWidget {
     //     ),
     //   ),
     // );
-    return SignInPage();
+    return const SignInPage();
   }
 
   @override
@@ -44,42 +44,42 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  void _showSignInError(BuildContext context, Exception exception) {
-    // if (exception is FirebaseException &&
-    //     exception.code == "SIGN_IN_ABORTED_BY_USER") {
-    //   return;
-    // }
-    // showExceptionAlertDialog(
-    //   context,
-    //   title: "Sign in failed",
-    //   exception: exception,
-    // );
-  }
+  // void _showSignInError(BuildContext context, Exception exception) {
+  //   if (exception is FirebaseException &&
+  //       exception.code == "SIGN_IN_ABORTED_BY_USER") {
+  //     return;
+  //   }
+  //   showExceptionAlertDialog(
+  //     context,
+  //     title: "Sign in failed",
+  //     exception: exception,
+  //   );
+  // }
 
-  Future<void> _signInWithGoogle(BuildContext context) async {
-    // try {
-    //   await manager.signInWithGoogle();
-    // } on Exception catch (e) {
-    //   _showSignInError(context, e);
-    // }
-  }
+  // Future<void> _signInWithGoogle(BuildContext context) async {
+  //   try {
+  //     await manager.signInWithGoogle();
+  //   } on Exception catch (e) {
+  //     _showSignInError(context, e);
+  //   }
+  // }
 
-  Future<void> _signInWithFacebook(BuildContext context) async {
-    // try {
-    //   await manager.signInWithFacebook();
-    // } on Exception catch (e) {
-    //   _showSignInError(context, e);
-    // }
-  }
+  // Future<void> _signInWithFacebook(BuildContext context) async {
+  //   try {
+  //     await manager.signInWithFacebook();
+  //   } on Exception catch (e) {
+  //     _showSignInError(context, e);
+  //   }
+  // }
 
-  void _signInWithEmail(BuildContext context) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute<void>(
-    //     fullscreenDialog: true,
-    //     builder: (context) => const EmailSignInPage(),
-    //   ),
-    // );
-  }
+  // void _signInWithEmail(BuildContext context) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute<void>(
+  //       fullscreenDialog: true,
+  //       builder: (context) => const EmailSignInPage(),
+  //     ),
+  //   );
+  // }
 
   Widget _buildContent(BuildContext context) {
     return Padding(

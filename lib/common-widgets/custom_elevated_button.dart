@@ -21,7 +21,6 @@ class CustomElevatedButton extends StatelessWidget {
     return SizedBox(
       height: height,
       child: ElevatedButton(
-        child: child,
         style: ElevatedButton.styleFrom(
           primary: buttonColor,
           shape: RoundedRectangleBorder(
@@ -31,6 +30,7 @@ class CustomElevatedButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
+        child: child,
       ),
     );
   }

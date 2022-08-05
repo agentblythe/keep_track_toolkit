@@ -60,13 +60,13 @@ Future<bool?> showAlertDialog(
           if (cancelAction != null)
             CupertinoDialogAction(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text(cancelAction.text),
               isDestructiveAction: cancelAction.destructive,
+              child: Text(cancelAction.text),
             ),
           CupertinoDialogAction(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(defaultAction.text),
             isDestructiveAction: defaultAction.destructive,
+            child: Text(defaultAction.text),
           )
         ],
       ),
