@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_page.dart';
@@ -141,16 +143,18 @@ class SignInPage extends StatelessWidget {
             textColor: Colors.white,
             onPressed: () => _signInWithEmail(context),
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          SignInButtonWithTextAndIcon(
-            image: "images/phone-icon.png",
-            text: "Sign in with Phone",
-            buttonColor: Colors.yellow.shade300,
-            textColor: Colors.black,
-            onPressed: () => _signInWithPhone(context),
-          )
+          if (Platform.isAndroid)
+            const SizedBox(
+              height: 8,
+            ),
+          if (Platform.isAndroid)
+            SignInButtonWithTextAndIcon(
+              image: "images/phone-icon.png",
+              text: "Sign in with Phone",
+              buttonColor: Colors.yellow.shade300,
+              textColor: Colors.black,
+              onPressed: () => _signInWithPhone(context),
+            )
         ],
       ),
     );
