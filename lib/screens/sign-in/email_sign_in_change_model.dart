@@ -1,8 +1,11 @@
-
 import 'package:flutter/foundation.dart';
-import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_model.dart';
 import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_validators.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
+
+enum EmailSignInFormType {
+  signIn,
+  register,
+}
 
 class EmailSignInChangeModel with EmailAndPasswordValidators, ChangeNotifier {
   final AuthBase auth;

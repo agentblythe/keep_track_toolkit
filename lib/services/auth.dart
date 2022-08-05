@@ -5,10 +5,12 @@ abstract class AuthBase {
   Stream<User?> authStateChanges();
   Future<User?> signInWithEmailAndPassword(String email, String password);
   Future<User?> createUserWithEmailAndPassword(String email, String password);
+  Future<void> resetPassword(String email);
+  Future<User?> signInWithPhoneNumber(String phoneNumber);
   // Future<User?> signInWithGoogle();
   // Future<User?> signInWithFacebook();
   // Future<void> signOut();
-  Future<void> resetPassword(String email);
+
 }
 
 class Auth implements AuthBase {
@@ -45,5 +47,10 @@ class Auth implements AuthBase {
   @override
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  @override
+  Future<User?> signInWithPhoneNumber(String phoneNumber) async {
+    
   }
 }

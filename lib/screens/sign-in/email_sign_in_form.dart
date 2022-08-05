@@ -4,7 +4,6 @@ import 'package:keep_track_toolkit/common-widgets/form_submit_button.dart';
 import 'package:keep_track_toolkit/common-widgets/show_alert_dialog.dart';
 import 'package:keep_track_toolkit/common-widgets/show_exception_alert_dialog.dart';
 import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_change_model.dart';
-import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_model.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
 import 'package:keep_track_toolkit/utils/show_snack_bar.dart';
 import 'package:provider/provider.dart';
