@@ -6,7 +6,6 @@ abstract class AuthBase {
   Future<User?> signInWithEmailAndPassword(String email, String password);
   Future<User?> createUserWithEmailAndPassword(String email, String password);
   Future<void> resetPassword(String email);
-  Future<User?> signInWithPhoneNumber(String phoneNumber);
   // Future<User?> signInWithGoogle();
   // Future<User?> signInWithFacebook();
   Future<void> signOut();
@@ -46,18 +45,6 @@ class Auth implements AuthBase {
   @override
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
-  }
-
-  @override
-  Future<User?> signInWithPhoneNumber(String phoneNumber) async {
-    await _firebaseAuth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        verificationCompleted: ((phoneAuthCredential) {
-          print("complete");
-        }),
-        verificationFailed: ((error) {}),
-        codeSent: ((verificationId, forceResendingToken) {}),
-        codeAutoRetrievalTimeout: ((verificationId) {}));
   }
 
   @override

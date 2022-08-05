@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_page.dart';
-import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/sign_in_button_with_text_and_icon.dart';
 import 'package:keep_track_toolkit/screens/sign-in/sign_in_manager.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
@@ -91,15 +88,6 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  void _signInWithPhone(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        fullscreenDialog: true,
-        builder: (context) => const PhoneSignInPage(),
-      ),
-    );
-  }
-
   Widget _buildContent(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -143,18 +131,6 @@ class SignInPage extends StatelessWidget {
             textColor: Colors.white,
             onPressed: () => _signInWithEmail(context),
           ),
-          if (Platform.isAndroid)
-            const SizedBox(
-              height: 8,
-            ),
-          if (Platform.isAndroid)
-            SignInButtonWithTextAndIcon(
-              image: "images/phone-icon.png",
-              text: "Sign in with Phone",
-              buttonColor: Colors.yellow.shade300,
-              textColor: Colors.black,
-              onPressed: () => _signInWithPhone(context),
-            )
         ],
       ),
     );
