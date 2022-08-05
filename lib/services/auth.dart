@@ -49,9 +49,15 @@ class Auth implements AuthBase {
   }
 
   @override
-  Future<User?> signInWithPhoneNumber(String phoneNumber) {
-    // TODO: implement signInWithPhoneNumber
-    throw UnimplementedError();
+  Future<User?> signInWithPhoneNumber(String phoneNumber) async {
+    await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: ((phoneAuthCredential) {
+          print("complete");
+        }),
+        verificationFailed: ((error) {}),
+        codeSent: ((verificationId, forceResendingToken) {}),
+        codeAutoRetrievalTimeout: ((verificationId) {}));
   }
 
   @override

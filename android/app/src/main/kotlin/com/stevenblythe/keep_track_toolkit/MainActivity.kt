@@ -1,4 +1,4 @@
-package com.stevenblythe.keep_track_toolkit
+package com.stevenblythe.keeptracktoolkit
 
 import io.flutter.embedding.android.FlutterActivity
 
