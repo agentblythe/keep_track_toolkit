@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/sign_in_button_with_text_and_icon.dart';
 
 class SignInPage extends StatelessWidget {
@@ -72,14 +73,14 @@ class SignInPage extends StatelessWidget {
   //   }
   // }
 
-  // void _signInWithEmail(BuildContext context) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute<void>(
-  //       fullscreenDialog: true,
-  //       builder: (context) => const EmailSignInPage(),
-  //     ),
-  //   );
-  // }
+  void _signInWithEmail(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (context) => const EmailSignInPage(),
+      ),
+    );
+  }
 
   Widget _buildContent(BuildContext context) {
     return Padding(
@@ -122,8 +123,7 @@ class SignInPage extends StatelessWidget {
             text: "Sign in with Email",
             buttonColor: Colors.teal.shade700,
             textColor: Colors.white,
-            onPressed:
-                () {}, // isLoading ? null : () => _signInWithEmail(context),
+            onPressed: () => _signInWithEmail(context),
           ),
           const SizedBox(
             height: 8,

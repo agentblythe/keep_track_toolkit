@@ -8,7 +8,7 @@ abstract class AuthBase {
   // Future<User?> signInWithGoogle();
   // Future<User?> signInWithFacebook();
   // Future<void> signOut();
-  // Future<void> resetPassword(String email);
+  Future<void> resetPassword(String email);
 }
 
 class Auth implements AuthBase {
@@ -40,5 +40,10 @@ class Auth implements AuthBase {
       password: password,
     );
     return userCredential.user;
+  }
+
+  @override
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 }
