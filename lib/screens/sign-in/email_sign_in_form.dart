@@ -53,7 +53,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   void _submit() async {
     try {
       await model.submit();
-      popNavigationContext();
+      if (!mounted) return;
+      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       showExceptionAlertDialog(
         context,
@@ -61,10 +62,6 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         exception: e,
       );
     }
-  }
-
-  void popNavigationContext() {
-    Navigator.of(context).pop();
   }
 
   void _toggleFormType() {

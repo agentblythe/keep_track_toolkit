@@ -9,8 +9,7 @@ abstract class AuthBase {
   Future<User?> signInWithPhoneNumber(String phoneNumber);
   // Future<User?> signInWithGoogle();
   // Future<User?> signInWithFacebook();
-  // Future<void> signOut();
-
+  Future<void> signOut();
 }
 
 class Auth implements AuthBase {
@@ -50,7 +49,13 @@ class Auth implements AuthBase {
   }
 
   @override
-  Future<User?> signInWithPhoneNumber(String phoneNumber) async {
-    
+  Future<User?> signInWithPhoneNumber(String phoneNumber) {
+    // TODO: implement signInWithPhoneNumber
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
   }
 }

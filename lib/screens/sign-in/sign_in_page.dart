@@ -2,34 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/sign_in_button_with_text_and_icon.dart';
+import 'package:keep_track_toolkit/screens/sign-in/sign_in_manager.dart';
+import 'package:keep_track_toolkit/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatelessWidget {
-  //final bool isLoading;
+  final SignInManager manager;
+  final bool isLoading;
 
   const SignInPage({
     Key? key,
-    //required this.isLoading,
+    required this.manager,
+    required this.isLoading,
   }) : super(key: key);
 
   static Widget create(BuildContext context) {
-    // return ChangeNotifierProvider<ValueNotifier<bool>>(
-    //   create: (_) => ValueNotifier<bool>(false),
-    //   child: Consumer<ValueNotifier<bool>>(
-    //     builder: (_, isLoading, __) => Provider<SignInManager>(
-    //       create: (_) => SignInManager(
-    //         auth: auth,
-    //         isLoading: isLoading,
-    //       ),
-    //       child: Consumer<SignInManager>(
-    //         builder: (_, bloc, __) => SignInPage(
-    //           manager: bloc,
-    //           isLoading: isLoading.value,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
-    return const SignInPage();
+    final auth = Provider.of<AuthBase>(context, listen: false);
+
+    return ChangeNotifierProvider<ValueNotifier<bool>>(
+      create: (_) => ValueNotifier<bool>(false),
+      child: Consumer<ValueNotifier<bool>>(
+        builder: (_, isLoading, __) => Provider<SignInManager>(
+          create: (_) => SignInManager(
+            auth: auth,
+            isLoading: isLoading,
+          ),
+          child: Consumer<SignInManager>(
+            builder: (_, bloc, __) => SignInPage(
+              manager: bloc,
+              isLoading: isLoading.value,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -151,17 +157,17 @@ class SignInPage extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    // if (isLoading) {
-    //   return const Center(child: CircularProgressIndicator());
-    // } else {
-    return const Text(
-      "Sign in",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 32.0,
-        fontWeight: FontWeight.w600,
-      ),
-    );
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      return const Text(
+        "Sign in",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 32.0,
+          fontWeight: FontWeight.w600,
+        ),
+      );
+    }
   }
-  //}
 }

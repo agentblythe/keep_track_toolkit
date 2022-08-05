@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/common-widgets/form_submit_button.dart';
-import 'package:keep_track_toolkit/common-widgets/show_alert_dialog.dart';
 import 'package:keep_track_toolkit/common-widgets/show_exception_alert_dialog.dart';
 import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_change_model.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
-import 'package:keep_track_toolkit/utils/show_snack_bar.dart';
 import 'package:provider/provider.dart';
 
 class PhoneSignInForm extends StatefulWidget {
@@ -54,35 +52,6 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
         title: "Sign in failed",
         exception: e,
       );
-    }
-  }
-
-  Future<void> _confirmResetPassword(BuildContext context, String email) async {
-    final didConfirmResetPassword = await showAlertDialog(
-      context,
-      title: "Reset password confirmation",
-      content:
-          "Are you sure you want to reset your password?  An email will be sent to $email",
-      defaultAction: AlertAction(
-        text: "Reset",
-        destructive: true,
-      ),
-      cancelAction: AlertAction(text: "Cancel"),
-    );
-
-    if (didConfirmResetPassword == true) {
-      _initiatePasswordReset(email);
-    }
-  }
-
-  Future<void> _initiatePasswordReset(String email) async {
-    try {
-      final auth = Provider.of<AuthBase>(context, listen: false);
-      await auth.resetPassword(email);
-      if (!mounted) return;
-      showSnackBar(context, "Reset Password email sent!");
-    } catch (e) {
-      debugPrint("Password reset failed with exception: ${e.toString()}");
     }
   }
 
