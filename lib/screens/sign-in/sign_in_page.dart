@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:keep_track_toolkit/common-widgets/show_exception_alert_dialog.dart';
 import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/sign_in_button_with_text_and_icon.dart';
 import 'package:keep_track_toolkit/screens/sign-in/sign_in_manager.dart';
@@ -51,25 +53,25 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  // void _showSignInError(BuildContext context, Exception exception) {
-  //   if (exception is FirebaseException &&
-  //       exception.code == "SIGN_IN_ABORTED_BY_USER") {
-  //     return;
-  //   }
-  //   showExceptionAlertDialog(
-  //     context,
-  //     title: "Sign in failed",
-  //     exception: exception,
-  //   );
-  // }
+  void _showSignInError(BuildContext context, Exception exception) {
+    if (exception is FirebaseException &&
+        exception.code == "SIGN_IN_ABORTED_BY_USER") {
+      return;
+    }
+    showExceptionAlertDialog(
+      context,
+      title: "Sign in failed",
+      exception: exception,
+    );
+  }
 
-  // Future<void> _signInWithGoogle(BuildContext context) async {
-  //   try {
-  //     await manager.signInWithGoogle();
-  //   } on Exception catch (e) {
-  //     _showSignInError(context, e);
-  //   }
-  // }
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    try {
+      await manager.signInWithGoogle();
+    } on Exception catch (e) {
+      _showSignInError(context, e);
+    }
+  }
 
   // Future<void> _signInWithFacebook(BuildContext context) async {
   //   try {
@@ -107,8 +109,7 @@ class SignInPage extends StatelessWidget {
             text: "Sign in with Google",
             buttonColor: Colors.white,
             textColor: Colors.black87,
-            onPressed:
-                () {}, // isLoading ? null : () => _signInWithGoogle(context),
+            onPressed: isLoading ? null : () => _signInWithGoogle(context),
           ),
           const SizedBox(
             height: 8,
