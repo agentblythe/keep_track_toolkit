@@ -7,7 +7,7 @@ class SignInButtonWithTextAndIcon extends CustomElevatedButton {
     required final String image,
     required final String text,
     required final Color buttonColor,
-    final Color? textColor,
+    required final Color textColor,
     final VoidCallback? onPressed,
   }) : super(
           key: key,
@@ -18,7 +18,7 @@ class SignInButtonWithTextAndIcon extends CustomElevatedButton {
               Text(
                 text,
                 style: TextStyle(
-                  color: textColor ?? Colors.white,
+                  color: onPressed == null ? Colors.white : textColor,
                   fontSize: 15.0,
                 ),
               ),
@@ -28,7 +28,7 @@ class SignInButtonWithTextAndIcon extends CustomElevatedButton {
               )
             ],
           ),
-          buttonColor: buttonColor,
+          buttonColor: onPressed == null ? Colors.grey : buttonColor,
           onPressed: onPressed,
         );
 }
