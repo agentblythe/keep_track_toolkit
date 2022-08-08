@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Keep Track Toolkit</string>
+    <string name="facebook_app_id">1398795553932551</string>
+    <string name="fb_login_protocol_scheme">fb1398795553932551</string>
+    <string name="facebook_client_token">aa00039d46864056ca29a5dfeb7c0b14</string>
+</resources>
