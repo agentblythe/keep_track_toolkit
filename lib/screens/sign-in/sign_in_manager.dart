@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
 
@@ -11,19 +10,18 @@ class SignInManager {
     required this.isLoading,
   });
 
-  Future<User?> _signIn(Future<User?> Function() signInMethod) async {
+  Future<void> _signIn(Future<void> Function() signInMethod) async {
     try {
       isLoading.value = true;
-      return await signInMethod();
+      await signInMethod();
     } catch (e) {
       isLoading.value = false;
       rethrow;
     }
   }
 
-  Future<User?> signInWithGoogle() async =>
-      await _signIn(auth.signInWithGoogle);
+  Future<void> signInWithGoogle() async => await _signIn(auth.signInWithGoogle);
 
-  Future<User?> signInWithFacebook() async =>
+  Future<void> signInWithFacebook() async =>
       await _signIn(auth.signInWithFacebook);
 }
