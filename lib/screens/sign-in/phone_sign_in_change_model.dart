@@ -52,7 +52,7 @@ class PhoneSignInChangeModel with PhoneValidators, ChangeNotifier {
     try {
       var verificationResult = await auth.verifyPhoneNumber(phone);
       if (verificationResult.signInResult ==
-          PhoneSignInVerificationResultEnum.Verified) {
+          PhoneSignInVerificationResultEnum.verified) {
         updateWith(verificationId: verificationResult.info, isLoading: false);
       }
     } catch (e) {

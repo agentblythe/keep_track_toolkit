@@ -9,8 +9,8 @@ class PhoneSignInVerificationResult {
 }
 
 enum PhoneSignInVerificationResultEnum {
-  SignedUp,
-  Error,
-  Verified,
-  TimedOut,
+  signedUp,
+  error,
+  verified,
+  timedOut,
 }

@@ -10,7 +10,7 @@ class EmailSignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign in'),
+        title: const Text('Sign in with Email'),
         elevation: 2.0,
       ),
       body: SingleChildScrollView(

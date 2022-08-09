@@ -122,7 +122,7 @@ class Auth implements AuthBase {
           UserCredential authresult =
               await _firebaseAuth.signInWithCredential(phoneAuthCredential);
           completer.complete(PhoneSignInVerificationResult(
-            signInResult: PhoneSignInVerificationResultEnum.SignedUp,
+            signInResult: PhoneSignInVerificationResultEnum.signedUp,
           ));
         },
         verificationFailed: (e) {
@@ -130,19 +130,19 @@ class Auth implements AuthBase {
               ? "Invalid number. Enter again."
               : "Can Not Login Now. Please try again.";
           completer.complete(PhoneSignInVerificationResult(
-            signInResult: PhoneSignInVerificationResultEnum.Error,
+            signInResult: PhoneSignInVerificationResultEnum.error,
             info: error,
           ));
         },
         codeSent: (verificationId, forceResendingToken) {
           completer.complete(PhoneSignInVerificationResult(
-            signInResult: PhoneSignInVerificationResultEnum.Verified,
+            signInResult: PhoneSignInVerificationResultEnum.verified,
             info: verificationId,
           ));
         },
         codeAutoRetrievalTimeout: (verificationId) {
           completer.complete(PhoneSignInVerificationResult(
-            signInResult: PhoneSignInVerificationResultEnum.TimedOut,
+            signInResult: PhoneSignInVerificationResultEnum.timedOut,
           ));
         });
     return completer.future;

@@ -35,6 +35,7 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
   final TextEditingController _otpController = TextEditingController();
 
   final FocusNode _phoneFocusNode = FocusNode();
+  final FocusNode _otpFocusNode = FocusNode();
 
   PhoneSignInChangeModel get model => widget.model;
 
@@ -43,28 +44,20 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
     _phoneController.dispose();
     _otpController.dispose();
     _phoneFocusNode.dispose();
+    _otpFocusNode.dispose();
     super.dispose();
   }
 
-  void _submit() async {
-    try {
-      if (model.verificationId == "") {
-        await model.verifyPhoneNumber();
-      } else {
-        await model.submit(
-          model.verificationId,
-          model.otp,
-        );
-        if (!mounted) return;
-        Navigator.of(context).pop();
-      }
-    } on FirebaseAuthException catch (e) {
-      showExceptionAlertDialog(
-        context,
-        title: "Sign in failed",
-        exception: e,
-      );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: _buildChildren(),
+      ),
+    );
   }
 
   List<Widget> _buildChildren() {
@@ -144,15 +137,24 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _buildChildren(),
-      ),
-    );
+  void _submit() async {
+    try {
+      if (model.verificationId == "") {
+        await model.verifyPhoneNumber();
+      } else {
+        await model.submit(
+          model.verificationId,
+          model.otp,
+        );
+        if (!mounted) return;
+        Navigator.of(context).pop();
+      }
+    } on FirebaseAuthException catch (e) {
+      showExceptionAlertDialog(
+        context,
+        title: "Sign in failed",
+        exception: e,
+      );
+    }
   }
 }

@@ -10,7 +10,7 @@ class PhoneSignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign in'),
+        title: const Text('Sign in with Phone'),
         elevation: 2.0,
       ),
       body: SingleChildScrollView(
