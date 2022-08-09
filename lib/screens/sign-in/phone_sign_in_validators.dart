@@ -8,16 +8,15 @@ class PhoneValidator implements StringValidator {
   @override
   bool isValid(String value) {
     _error = "";
-    return true;
 
-    // RegExp exp = RegExp(r"^\+[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$");
-    // RegExpMatch? match = exp.firstMatch(value);
+    RegExp exp = RegExp(r"^(?:[+0][1-9])?[0-9]{10,12}$");
+    RegExpMatch? match = exp.firstMatch(value);
 
-    // if (match == null) {
-    //   _error = "Phone Number is invalid";
-    //   return false;
-    // }
-    // return _error == "";
+    if (match == null) {
+      _error = "Phone Number is invalid";
+      return false;
+    }
+    return _error == "";
   }
 }
 

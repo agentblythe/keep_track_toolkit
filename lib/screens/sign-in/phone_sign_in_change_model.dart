@@ -33,7 +33,7 @@ class PhoneSignInChangeModel with PhoneValidators, ChangeNotifier {
   }
 
   String? get phoneErrorText =>
-      !phoneValidator.isValid(phone) && submitted ? phoneValidator.error : null;
+      !phoneValidator.isValid(phone) ? phoneValidator.error : null;
 
   String get buttonText {
     if (verificationId == "") {
