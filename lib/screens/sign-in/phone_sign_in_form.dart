@@ -32,6 +32,7 @@ class PhoneSignInForm extends StatefulWidget {
 
 class _PhoneSignInFormState extends State<PhoneSignInForm> {
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
 
   final FocusNode _phoneFocusNode = FocusNode();
 
@@ -40,15 +41,23 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
   @override
   void dispose() {
     _phoneController.dispose();
+    _otpController.dispose();
     _phoneFocusNode.dispose();
     super.dispose();
   }
 
   void _submit() async {
     try {
-      await model.submit();
-      if (!mounted) return;
-      Navigator.of(context).pop();
+      if (model.verificationId == "") {
+        await model.verifyPhoneNumber();
+      } else {
+        await model.submit(
+          model.verificationId,
+          model.otp,
+        );
+        if (!mounted) return;
+        Navigator.of(context).pop();
+      }
     } on FirebaseAuthException catch (e) {
       showExceptionAlertDialog(
         context,
@@ -60,13 +69,14 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
 
   List<Widget> _buildChildren() {
     return [
-      _buildEmailTextField(),
+      _buildPhoneTextField(),
       const SizedBox(height: 16),
+      if (model.verificationId != "") _buildVerifiedContents(),
       FormSubmitButton(
         newChild: !model.isLoading
-            ? const Text(
-                "Sign in",
-                style: TextStyle(
+            ? Text(
+                model.buttonText,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
                 ),
@@ -77,22 +87,60 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
     ];
   }
 
-  Widget _buildEmailTextField() {
+  Widget _buildPhoneTextField() {
     return TextField(
       controller: _phoneController,
       decoration: InputDecoration(
         labelText: "Phone Number",
         hintText: "Include International Code, e.g. +44",
         errorText: model.phoneErrorText,
-        enabled: !model.isLoading,
+        enabled: !model.isLoading && model.verificationId == "",
       ),
       enableSuggestions: false,
       autocorrect: false,
       keyboardType: TextInputType.phone,
       textInputAction: TextInputAction.done,
       focusNode: _phoneFocusNode,
-      onEditingComplete: model.submitEnabled ? _submit : null,
       onChanged: model.updatePhone,
+    );
+  }
+
+  Widget _buildVerifiedContents() {
+    return Column(
+      children: [
+        _buildPhoneNumberVerifiedLabel(),
+        _buildOTPTextField(),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildOTPTextField() {
+    return TextField(
+      controller: _otpController,
+      decoration: InputDecoration(
+        labelText: "One Time Passcode",
+        hintText: "e.g. 123456",
+        enabled: !model.isLoading && model.verificationId != "",
+      ),
+      keyboardType: TextInputType.number,
+      onChanged: model.updateOTP,
+    );
+  }
+
+  Widget _buildPhoneNumberVerifiedLabel() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: const [
+        Icon(
+          Icons.check_circle_rounded,
+          color: Colors.green,
+        ),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text("Phone Number Verified"),
+        ),
+      ],
     );
   }
 

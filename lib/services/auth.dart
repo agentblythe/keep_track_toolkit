@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_verification_result.dart';
 
 abstract class AuthBase {
   User? get currentUser;
@@ -10,7 +13,8 @@ abstract class AuthBase {
   Future<void> resetPassword(String email);
   Future<void> signInWithGoogle();
   Future<void> signInWithFacebook();
-  Future<void> signInWithPhone(String phone);
+  Future<PhoneSignInVerificationResult> verifyPhoneNumber(String phone);
+  Future<void> signInWithPhone(String verificationID, String otp);
   Future<void> signOut();
 }
 
@@ -107,5 +111,50 @@ class Auth implements AuthBase {
     }
   }
 
-  Future<void> signInWithPhone(String phone) async {}
+  @override
+  Future<PhoneSignInVerificationResult> verifyPhoneNumber(String phone) {
+    final completer = Completer<PhoneSignInVerificationResult>();
+
+    _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phone,
+        timeout: const Duration(seconds: 30),
+        verificationCompleted: (phoneAuthCredential) async {
+          UserCredential authresult =
+              await _firebaseAuth.signInWithCredential(phoneAuthCredential);
+          completer.complete(PhoneSignInVerificationResult(
+            signInResult: PhoneSignInVerificationResultEnum.SignedUp,
+          ));
+        },
+        verificationFailed: (e) {
+          String error = e.code == 'invalid-phone-number'
+              ? "Invalid number. Enter again."
+              : "Can Not Login Now. Please try again.";
+          completer.complete(PhoneSignInVerificationResult(
+            signInResult: PhoneSignInVerificationResultEnum.Error,
+            info: error,
+          ));
+        },
+        codeSent: (verificationId, forceResendingToken) {
+          completer.complete(PhoneSignInVerificationResult(
+            signInResult: PhoneSignInVerificationResultEnum.Verified,
+            info: verificationId,
+          ));
+        },
+        codeAutoRetrievalTimeout: (verificationId) {
+          completer.complete(PhoneSignInVerificationResult(
+            signInResult: PhoneSignInVerificationResultEnum.TimedOut,
+          ));
+        });
+    return completer.future;
+  }
+
+  @override
+  Future<void> signInWithPhone(String verificationID, String otp) async {
+    final AuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: verificationID,
+      smsCode: otp,
+    );
+
+    UserCredential user = await _firebaseAuth.signInWithCredential(credential);
+  }
 }
