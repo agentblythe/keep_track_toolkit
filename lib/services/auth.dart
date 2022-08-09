@@ -10,6 +10,7 @@ abstract class AuthBase {
   Future<void> resetPassword(String email);
   Future<void> signInWithGoogle();
   Future<void> signInWithFacebook();
+  Future<void> signInWithPhone(String phone);
   Future<void> signOut();
 }
 
@@ -105,4 +106,6 @@ class Auth implements AuthBase {
         throw UnimplementedError();
     }
   }
+
+  Future<void> signInWithPhone(String phone) async {}
 }
