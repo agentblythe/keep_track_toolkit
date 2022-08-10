@@ -3,6 +3,11 @@ import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_validators.dart
 import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_verification_result.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
 
+enum PhoneSignInStage {
+  verification,
+  otp,
+}
+
 class PhoneSignInChangeModel with PhoneValidators, ChangeNotifier {
   final AuthBase auth;
   String phone;
@@ -11,6 +16,7 @@ class PhoneSignInChangeModel with PhoneValidators, ChangeNotifier {
   bool hidePassword;
   String verificationId;
   String otp;
+  PhoneSignInStage stage;
 
   PhoneSignInChangeModel({
     required this.auth,
@@ -20,6 +26,7 @@ class PhoneSignInChangeModel with PhoneValidators, ChangeNotifier {
     this.hidePassword = true,
     this.verificationId = "",
     this.otp = "",
+    this.stage = PhoneSignInStage.verification,
   });
 
   bool get phoneNumberVerified => verificationId != "";
@@ -53,7 +60,11 @@ class PhoneSignInChangeModel with PhoneValidators, ChangeNotifier {
       var verificationResult = await auth.verifyPhoneNumber(phone);
       if (verificationResult.signInResult ==
           PhoneSignInVerificationResultEnum.verified) {
-        updateWith(verificationId: verificationResult.info, isLoading: false);
+        updateWith(
+          verificationId: verificationResult.info,
+          isLoading: false,
+          stage: PhoneSignInStage.otp,
+        );
       }
     } catch (e) {
       updateWith(isLoading: false);
@@ -71,20 +82,21 @@ class PhoneSignInChangeModel with PhoneValidators, ChangeNotifier {
     }
   }
 
-  void updateWith({
-    String? phone,
-    bool? isLoading,
-    bool? submitted,
-    bool? hidePassword,
-    String? verificationId,
-    String? otp,
-  }) {
+  void updateWith(
+      {String? phone,
+      bool? isLoading,
+      bool? submitted,
+      bool? hidePassword,
+      String? verificationId,
+      String? otp,
+      PhoneSignInStage? stage}) {
     this.phone = phone ?? this.phone;
     this.isLoading = isLoading ?? this.isLoading;
     this.submitted = submitted ?? this.submitted;
     this.hidePassword = hidePassword ?? this.hidePassword;
     this.verificationId = verificationId ?? this.verificationId;
     this.otp = otp ?? this.otp;
+    this.stage = stage ?? this.stage;
 
     notifyListeners();
   }

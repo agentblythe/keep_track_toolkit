@@ -62,7 +62,7 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
 
   List<Widget> _buildChildren() {
     return [
-      _buildPhoneTextField(),
+      _buildFirstStageContents(),
       const SizedBox(height: 16),
       if (model.verificationId != "") _buildVerifiedContents(),
       FormSubmitButton(
@@ -80,7 +80,7 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
     ];
   }
 
-  Widget _buildPhoneTextField() {
+  Widget _buildFirstStageContents() {
     return TextField(
       controller: _phoneController,
       decoration: InputDecoration(
@@ -102,13 +102,13 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
     return Column(
       children: [
         _buildPhoneNumberVerifiedLabel(),
-        _buildOTPTextField(),
+        _buildSecondStageContents(),
         const SizedBox(height: 16),
       ],
     );
   }
 
-  Widget _buildOTPTextField() {
+  Widget _buildSecondStageContents() {
     return TextField(
       controller: _otpController,
       decoration: InputDecoration(
@@ -139,7 +139,7 @@ class _PhoneSignInFormState extends State<PhoneSignInForm> {
 
   void _submit() async {
     try {
-      if (model.verificationId == "") {
+      if (model.stage == PhoneSignInStage.verification) {
         await model.verifyPhoneNumber();
       } else {
         await model.submit(
