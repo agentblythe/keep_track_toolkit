@@ -135,6 +135,17 @@ class SignInPage extends StatelessWidget {
             height: 8,
           ),
           SignInButtonWithTextAndIcon(
+            image: "images/twitter-logo.png",
+            text: "Sign in with Twitter",
+            buttonColor: const Color(0xFFD3D3D3),
+            textColor: Colors.black,
+            onPressed:
+                () {}, // isLoading ? null : () => _signInWithFacebook(context),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          SignInButtonWithTextAndIcon(
             image: "images/email-icon.png",
             text: "Sign in with Email",
             buttonColor: Colors.teal.shade700,
