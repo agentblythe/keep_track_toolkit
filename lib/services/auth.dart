@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_verification_result.dart';
-import 'package:twitter_login/entity/auth_result.dart';
+import 'package:keep_track_toolkit/services/twitter_auth_config.dart';
 import 'package:twitter_login/twitter_login.dart';
 
 abstract class AuthBase {
@@ -164,8 +164,8 @@ class Auth implements AuthBase {
   @override
   Future<void> signInWithTwitter() async {
     final twitter = TwitterLogin(
-      apiKey: "eTYMe1EdqjtIfIMvQJK28AqZZ",
-      apiSecretKey: "KzL907kU8Ofq0WuCk8PiKhI3DnT9cnkpoR6RkLjbsRppXrjk0I",
+      apiKey: TwitterAuthConfig.apiKey,
+      apiSecretKey: TwitterAuthConfig.apiSecret,
       redirectURI: "keep-track-toolkit-e9b8a://",
     );
 

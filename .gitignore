@@ -50,3 +50,4 @@ GoogleService-Info.plist
 google-services.json
 Info.plist
 android/app/src/main/res/values/strings.xml
+twitter_auth_config.dart
