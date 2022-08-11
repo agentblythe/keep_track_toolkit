@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:keep_track_toolkit/common-widgets/show_exception_alert_dialog.dart';
 import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_page.dart';
@@ -123,7 +124,8 @@ class SignInPage extends StatelessWidget {
             height: 48,
           ),
           SignInButtonWithTextAndIcon(
-            image: "images/google-logo.png",
+            iconData: FontAwesomeIcons.google,
+            //image: "images/google-logo.png",
             text: "Sign in with Google",
             buttonColor: Colors.white,
             textColor: Colors.black87,
@@ -133,7 +135,8 @@ class SignInPage extends StatelessWidget {
             height: 8,
           ),
           SignInButtonWithTextAndIcon(
-            image: "images/facebook-logo.png",
+            iconData: FontAwesomeIcons.facebook,
+            //image: "images/facebook-logo.png",
             text: "Sign in with Facebook",
             buttonColor: const Color(0xFF334D92),
             textColor: Colors.white,
@@ -143,17 +146,20 @@ class SignInPage extends StatelessWidget {
             height: 8,
           ),
           SignInButtonWithTextAndIcon(
-            image: "images/twitter-logo.png",
+            iconData: FontAwesomeIcons.twitter,
+            //image: "images/twitter-logo.png",
             text: "Sign in with Twitter",
-            buttonColor: const Color(0xFFD9D9D9),
+            buttonColor: Colors.white,
             textColor: Colors.black,
+            iconColor: const Color(0xFF1DA1F2),
             onPressed: isLoading ? null : () => _signInWithTwitter(context),
           ),
           const SizedBox(
             height: 8,
           ),
           SignInButtonWithTextAndIcon(
-            image: "images/email-icon.png",
+            iconData: FontAwesomeIcons.envelope,
+            //image: "images/email-icon.png",
             text: "Sign in with Email",
             buttonColor: Colors.teal.shade700,
             textColor: Colors.white,
@@ -163,7 +169,8 @@ class SignInPage extends StatelessWidget {
             height: 8,
           ),
           SignInButtonWithTextAndIcon(
-            image: "images/phone-icon.png",
+            iconData: FontAwesomeIcons.phone,
+            //image: "images/phone-icon.png",
             text: "Sign in with Phone",
             buttonColor: Colors.amber.shade200,
             textColor: Colors.black,
