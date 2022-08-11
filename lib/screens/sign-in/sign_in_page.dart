@@ -82,6 +82,14 @@ class SignInPage extends StatelessWidget {
     }
   }
 
+  Future<void> _signInWithTwitter(BuildContext context) async {
+    try {
+      await manager.signInWithTwitter();
+    } on Exception catch (e) {
+      _showSignInError(context, e);
+    }
+  }
+
   void _signInWithEmail(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -137,10 +145,9 @@ class SignInPage extends StatelessWidget {
           SignInButtonWithTextAndIcon(
             image: "images/twitter-logo.png",
             text: "Sign in with Twitter",
-            buttonColor: const Color(0xFFD3D3D3),
+            buttonColor: const Color(0xFFD9D9D9),
             textColor: Colors.black,
-            onPressed:
-                () {}, // isLoading ? null : () => _signInWithFacebook(context),
+            onPressed: isLoading ? null : () => _signInWithTwitter(context),
           ),
           const SizedBox(
             height: 8,

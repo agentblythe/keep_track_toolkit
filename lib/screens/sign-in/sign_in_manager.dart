@@ -24,4 +24,7 @@ class SignInManager {
 
   Future<void> signInWithFacebook() async =>
       await _signIn(auth.signInWithFacebook);
+
+  Future<void> signInWithTwitter() async =>
+      await _signIn(auth.signInWithTwitter);
 }

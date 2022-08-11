@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_verification_result.dart';
+import 'package:twitter_login/entity/auth_result.dart';
+import 'package:twitter_login/twitter_login.dart';
 
 abstract class AuthBase {
   User? get currentUser;
@@ -13,6 +15,7 @@ abstract class AuthBase {
   Future<void> resetPassword(String email);
   Future<void> signInWithGoogle();
   Future<void> signInWithFacebook();
+  Future<void> signInWithTwitter();
   Future<PhoneSignInVerificationResult> verifyPhoneNumber(String phone);
   Future<void> signInWithPhone(String verificationID, String otp);
   Future<void> signOut();
@@ -155,6 +158,43 @@ class Auth implements AuthBase {
       smsCode: otp,
     );
 
-    UserCredential user = await _firebaseAuth.signInWithCredential(credential);
+    await _firebaseAuth.signInWithCredential(credential);
+  }
+
+  @override
+  Future<void> signInWithTwitter() async {
+    final twitter = TwitterLogin(
+      apiKey: "eTYMe1EdqjtIfIMvQJK28AqZZ",
+      apiSecretKey: "KzL907kU8Ofq0WuCk8PiKhI3DnT9cnkpoR6RkLjbsRppXrjk0I",
+      redirectURI: "keep-track-toolkit-e9b8a://",
+    );
+
+    final response = await twitter.loginV2();
+
+    switch (response.status) {
+      case TwitterLoginStatus.loggedIn:
+        final authToken = response.authToken;
+        final authTokenSecret = response.authTokenSecret;
+        if (authToken != null && authTokenSecret != null) {
+          await _firebaseAuth
+              .signInWithCredential(TwitterAuthProvider.credential(
+            accessToken: authToken,
+            secret: authTokenSecret,
+          ));
+        }
+        return;
+      case TwitterLoginStatus.cancelledByUser:
+        throw FirebaseAuthException(
+          code: "SIGN_IN_ABORTED_BY_USER",
+          message: "Twitter sign-in was aborted by the user",
+        );
+      case TwitterLoginStatus.error:
+        throw FirebaseAuthException(
+          code: "TWITTER_SIGN_IN_FAILED",
+          message: response.errorMessage,
+        );
+      default:
+        throw UnimplementedError();
+    }
   }
 }
