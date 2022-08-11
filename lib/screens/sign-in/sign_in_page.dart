@@ -125,7 +125,6 @@ class SignInPage extends StatelessWidget {
           ),
           SignInButtonWithTextAndIcon(
             iconData: FontAwesomeIcons.google,
-            //image: "images/google-logo.png",
             text: "Sign in with Google",
             buttonColor: Colors.white,
             textColor: Colors.black87,
@@ -136,7 +135,6 @@ class SignInPage extends StatelessWidget {
           ),
           SignInButtonWithTextAndIcon(
             iconData: FontAwesomeIcons.facebook,
-            //image: "images/facebook-logo.png",
             text: "Sign in with Facebook",
             buttonColor: const Color(0xFF334D92),
             textColor: Colors.white,
@@ -147,7 +145,6 @@ class SignInPage extends StatelessWidget {
           ),
           SignInButtonWithTextAndIcon(
             iconData: FontAwesomeIcons.twitter,
-            //image: "images/twitter-logo.png",
             text: "Sign in with Twitter",
             buttonColor: Colors.white,
             textColor: Colors.black,
@@ -159,7 +156,6 @@ class SignInPage extends StatelessWidget {
           ),
           SignInButtonWithTextAndIcon(
             iconData: FontAwesomeIcons.envelope,
-            //image: "images/email-icon.png",
             text: "Sign in with Email",
             buttonColor: Colors.teal.shade700,
             textColor: Colors.white,
@@ -170,7 +166,6 @@ class SignInPage extends StatelessWidget {
           ),
           SignInButtonWithTextAndIcon(
             iconData: FontAwesomeIcons.phone,
-            //image: "images/phone-icon.png",
             text: "Sign in with Phone",
             buttonColor: Colors.amber.shade200,
             textColor: Colors.black,
