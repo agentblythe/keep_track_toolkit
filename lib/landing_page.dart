@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/screens/home/home_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/sign_in_page.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
-import 'package:keep_track_toolkit/theme/theme_manager.dart';
+import 'package:keep_track_toolkit/profile/profile_manager.dart';
 import 'package:provider/provider.dart';
 
 class LandingPage extends StatelessWidget {
@@ -23,8 +23,8 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return SignInPage.create(context);
           }
-          return ChangeNotifierProvider<ThemeManager>(
-            create: (context) => ThemeManager(),
+          return ChangeNotifierProvider<ProfileManager>(
+            create: (context) => ProfileManager(),
             child: const HomePage(),
           );
           // return Provider<Database>(

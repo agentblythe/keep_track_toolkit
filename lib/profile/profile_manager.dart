@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ThemeManager extends ChangeNotifier {
+class ProfileManager extends ChangeNotifier {
   bool get darkMode => _darkMode;
   var _darkMode = false;
 

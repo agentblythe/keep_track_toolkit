@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/theme/keep_track_toolkit_theme.dart';
-import 'package:keep_track_toolkit/theme/theme_manager.dart';
+import 'package:keep_track_toolkit/profile/profile_manager.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeManager>(
+    return Consumer<ProfileManager>(
       builder: (context, themeManager, child) {
         ThemeData theme;
         if (themeManager.darkMode) {
@@ -20,17 +20,18 @@ class HomePage extends StatelessWidget {
           theme: theme,
           home: Scaffold(
             appBar: AppBar(
-                title: const Text('Keep Track Toolkit'),
-                actions: <Widget>[
-                  Switch(
-                    activeThumbImage: Image.asset("images/dark.png").image,
-                    value: themeManager.darkMode,
-                    onChanged: (darkMode) {
-                      themeManager.darkMode = darkMode;
-                    },
-                    inactiveThumbImage: Image.asset("images/light.png").image,
-                  ),
-                ]),
+              title: const Text('Keep Track Toolkit'),
+              actions: <Widget>[
+                Switch(
+                  activeThumbImage: Image.asset("images/dark.png").image,
+                  value: themeManager.darkMode,
+                  onChanged: (darkMode) {
+                    themeManager.darkMode = darkMode;
+                  },
+                  inactiveThumbImage: Image.asset("images/light.png").image,
+                ),
+              ],
+            ),
             body: const Center(
               child: Text("Home Page"),
             ),
