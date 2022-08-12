@@ -41,7 +41,6 @@ class LandingPage extends StatelessWidget {
                 return MaterialApp(
                   theme: theme,
                   onGenerateRoute: (settings) {
-                    print(settings.name);
                     late Widget page;
                     if (settings.name == AppRoutes.routeHome) {
                       page = const HomePage();
