@@ -23,11 +23,13 @@ class HomePage extends StatelessWidget {
                 title: const Text('Keep Track Toolkit'),
                 actions: <Widget>[
                   Switch(
+                    activeThumbImage: Image.asset("images/dark.png").image,
                     value: themeManager.darkMode,
                     onChanged: (darkMode) {
                       themeManager.darkMode = darkMode;
                     },
-                  )
+                    inactiveThumbImage: Image.asset("images/light.png").image,
+                  ),
                 ]),
             body: const Center(
               child: Text("Home Page"),
