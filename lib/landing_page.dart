@@ -45,7 +45,7 @@ class LandingPage extends StatelessWidget {
                     if (settings.name == AppRoutes.routeHome) {
                       page = const HomePage();
                     } else if (settings.name == AppRoutes.routeProfile) {
-                      page = ProfilePage(appUser: profileManager.appUser);
+                      page = const ProfilePage();
                     } else {
                       throw Exception('Unknown route: ${settings.name}');
                     }

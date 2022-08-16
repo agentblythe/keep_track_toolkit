@@ -15,9 +15,9 @@ class EmailValidator implements StringValidator {
 
     if (match == null) {
       _error = "Email is invalid";
-      return false;
     }
-    return true;
+
+    return _error == "";
   }
 }
 

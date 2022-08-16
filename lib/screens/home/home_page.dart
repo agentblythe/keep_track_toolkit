@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:keep_track_toolkit/navigation/app_routes.dart';
 import 'package:keep_track_toolkit/profile/profile_manager.dart';
+import 'package:keep_track_toolkit/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,24 +15,34 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Keep Track Toolkit'),
+        elevation: 2.0,
         leading: _buildUserProfileButton(
           profileManager.appUser,
           context,
         ),
-        actions: <Widget>[
-          Switch(
-            activeThumbImage: Image.asset("images/dark.png").image,
-            value: profileManager.darkMode,
-            onChanged: (darkMode) {
-              profileManager.darkMode = darkMode;
-            },
-            inactiveThumbImage: Image.asset("images/light.png").image,
-          ),
+        actions: [
+          _buildSignOutButton(context),
         ],
       ),
-      body: const Center(
-        child: Text("Home Page"),
+      body: _buildHomePage(context),
+    );
+  }
+
+  Widget _buildHomePage(BuildContext context) {
+    return const Center(
+      child: Text("Home Page"),
+    );
+  }
+
+  Widget _buildSignOutButton(BuildContext context) {
+    return IconButton(
+      icon: const Icon(
+        Icons.logout,
       ),
+      onPressed: () {
+        var auth = Provider.of<AuthBase>(context, listen: false);
+        auth.signOut();
+      },
     );
   }
 
