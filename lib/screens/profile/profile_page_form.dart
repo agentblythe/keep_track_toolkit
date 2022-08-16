@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/common-widgets/form_submit_button.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_change_model.dart';
@@ -13,16 +14,23 @@ class ProfilePageForm extends StatefulWidget {
   }) : super(key: key);
 
   static Widget create(BuildContext context) {
-    final user = Provider.of<AuthBase>(context, listen: false).currentUser!;
-    return ChangeNotifierProvider<ProfileChangeModel>(
-      create: (_) => ProfileChangeModel(
-        displayName: user.displayName,
-      ),
-      child: Consumer<ProfileChangeModel>(
-        builder: (_, model, __) => ProfilePageForm(
-          model: model,
-        ),
-      ),
+    final auth = Provider.of<AuthBase>(context, listen: false);
+    final user = auth.currentUser!;
+    return StreamBuilder<User?>(
+      stream: auth.userChanges(),
+      initialData: user,
+      builder: (context, snapshot) {
+        return ChangeNotifierProvider<ProfileChangeModel>(
+          create: (_) => ProfileChangeModel(
+            displayName: user.displayName,
+          ),
+          child: Consumer<ProfileChangeModel>(
+            builder: (_, model, __) => ProfilePageForm(
+              model: model,
+            ),
+          ),
+        );
+      },
     );
   }
 
