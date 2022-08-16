@@ -47,6 +47,8 @@ class ProfilePageForm extends StatefulWidget {
 }
 
 class _ProfilePageFormState extends State<ProfilePageForm> {
+  final FocusNode _displayNameFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,17 +86,18 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       decoration: InputDecoration(
         labelText: "Display Name",
         hintText: "Joe Bloggs",
-        //errorText: model.emailErrorText,
-        //enabled: !model.isLoading,
+        enabled: !widget.model.isLoading,
       ),
       enableSuggestions: false,
       autocorrect: false,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.name,
       textInputAction: TextInputAction.next,
-      //focusNode: _emailFocusNode,
-      //onEditingComplete: () => _emailEditingComplete(),
+      focusNode: _displayNameFocusNode,
+      onEditingComplete: () => _displayNameEditingComplete(),
       onChanged: (newDisplayName) {
-        context.read<ProfileCubit>().updateDisplayName(newDisplayName);
+        context
+            .read<ProfileCubit>()
+            .updateDisplayName(newDisplayName == "" ? null : newDisplayName);
       },
     );
   }
@@ -106,4 +109,6 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
         .then((value) => context.read<ProfileCubit>().updateIsLoading(false))
         .then((value) => showSnackBar(context, "Changes Saved"));
   }
+
+  void _displayNameEditingComplete() {}
 }

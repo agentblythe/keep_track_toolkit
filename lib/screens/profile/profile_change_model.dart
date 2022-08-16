@@ -11,33 +11,27 @@ class ProfileChangeValidators {
 class ProfileChangeModel with ProfileChangeValidators {
   String? displayName;
   bool isLoading = false;
+  SignInType? signInType;
 
   ProfileChangeModel({
     this.displayName,
     this.isLoading = false,
+    this.signInType,
   });
 
   ProfileChangeModel copyWith({
     String? displayName,
     bool? isLoading,
+    SignInType? signInType,
   }) {
     return ProfileChangeModel(
       displayName: displayName ?? this.displayName,
       isLoading: isLoading ?? this.isLoading,
+      signInType: signInType ?? this.signInType,
     );
   }
 
   bool get submitEnabled => !isLoading;
-
-  // SignInType _getSignInType(String providerId) {
-  //   if (providerId == "password") {
-  //     return SignInType.password;
-  //   } else if (providerId == "social") {
-  //     return SignInType.social;
-  //   } else {
-  //     return SignInType.phone;
-  //   }
-  // }
 
   // ProfileChangeModel updateWith({
   //   String? displayName,
