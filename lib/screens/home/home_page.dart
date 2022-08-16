@@ -1,14 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:keep_track_toolkit/common-widgets/show_alert_dialog.dart';
 import 'package:keep_track_toolkit/navigation/app_routes.dart';
 import 'package:keep_track_toolkit/profile/profile_manager.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var profileManager = Provider.of<ProfileManager>(context, listen: true);
@@ -21,29 +27,40 @@ class HomePage extends StatelessWidget {
           context,
         ),
         actions: [
-          _buildSignOutButton(context),
+          IconButton(
+            icon: const Icon(
+              Icons.logout,
+            ),
+            onPressed: () => _confirmSignOut(context),
+          )
         ],
       ),
-      body: _buildHomePage(context),
+      body: const Center(child: Text("Home Page")),
     );
   }
 
-  Widget _buildHomePage(BuildContext context) {
-    return const Center(
-      child: Text("Home Page"),
-    );
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      final auth = Provider.of<AuthBase>(context, listen: false);
+      await auth.signOut();
+    } catch (e) {
+      debugPrint("Sign-out failed with exception: ${e.toString()}");
+    }
   }
 
-  Widget _buildSignOutButton(BuildContext context) {
-    return IconButton(
-      icon: const Icon(
-        Icons.logout,
-      ),
-      onPressed: () {
-        var auth = Provider.of<AuthBase>(context, listen: false);
-        auth.signOut();
-      },
+  Future<void> _confirmSignOut(BuildContext context) async {
+    final didRequestSignOut = await showAlertDialog(
+      context,
+      title: "Sign out confirmation",
+      content: "Are you sure you want to sign out?",
+      defaultAction: AlertAction(text: "Sign out", destructive: true),
+      cancelAction: AlertAction(text: "Cancel"),
     );
+
+    if (didRequestSignOut == true) {
+      if (!mounted) return;
+      _signOut(context);
+    }
   }
 
   Widget _buildUserProfileButton(User appUser, BuildContext context) {
