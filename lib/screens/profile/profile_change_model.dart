@@ -11,7 +11,7 @@ class ProfileChangeValidators {
 }
 
 class ProfileChangeModel with ProfileChangeValidators, ChangeNotifier {
-  final User _user;
+  final User user;
 
   String? photoURL;
   String? displayName;
@@ -21,8 +21,8 @@ class ProfileChangeModel with ProfileChangeValidators, ChangeNotifier {
   bool isLoading = false;
 
   ProfileChangeModel({
-    required User user,
-  }) : _user = user {
+    required this.user,
+  }) {
     photoURL = user.photoURL;
     displayName = user.displayName;
     email = user.email;
@@ -45,11 +45,13 @@ class ProfileChangeModel with ProfileChangeValidators, ChangeNotifier {
     String? displayName,
     String? email,
     String? phone,
+    bool? isLoading,
   }) {
     this.photoURL = photoURL ?? this.photoURL;
     this.displayName = displayName ?? this.displayName;
     this.email = email ?? this.email;
     this.phone = phone ?? this.phone;
+    this.isLoading = isLoading ?? this.isLoading;
     notifyListeners();
   }
 
@@ -86,14 +88,24 @@ class ProfileChangeModel with ProfileChangeValidators, ChangeNotifier {
     return null;
   }
 
-  bool get _emailHasChanged => _user.email != email;
+  bool get _emailHasChanged => user.email != email;
 
-  bool get _phoneHasChanged => _user.phoneNumber != phone;
+  bool get _phoneHasChanged => user.phoneNumber != phone;
 
-  Future<void> _submit() async {
-    if (_emailHasChanged && emailErrorText == null) {
-      await _user.updateEmail(email!);
+  bool get _displayNameHasChanged => user.displayName != displayName;
+
+  Future<void> submit() async {
+    updateWith(isLoading: true);
+
+    if (_displayNameHasChanged) {
+      //await auth.updateDisplayName(displayName);
     }
+
+    updateWith(isLoading: false);
+
+    // if (_emailHasChanged && emailErrorText == null) {
+    //   await _user.updateEmail(email!);
+    // }
     // if (_phoneHasChanged && phoneErrorText == null) {
     //   await _user.updatePhoneNumber(phoneCredential);
     // }
