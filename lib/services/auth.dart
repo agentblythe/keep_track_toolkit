@@ -20,6 +20,8 @@ abstract class AuthBase {
   Future<PhoneSignInVerificationResult> verifyPhoneNumber(String phone);
   Future<void> signInWithPhone(String verificationID, String otp);
   Future<void> signOut();
+
+  Future<void> updateDisplayName(String? newDisplayName);
 }
 
 class Auth implements AuthBase {
@@ -200,5 +202,10 @@ class Auth implements AuthBase {
       default:
         throw UnimplementedError();
     }
+  }
+
+  @override
+  Future<void> updateDisplayName(String? newDisplayName) async {
+    await _firebaseAuth.currentUser?.updateDisplayName(newDisplayName);
   }
 }

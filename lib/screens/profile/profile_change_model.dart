@@ -92,6 +92,10 @@ class ProfileChangeModel with ChangeNotifier {
   Future<void> submit() async {
     updateWith(isLoading: true);
 
+    if (auth.currentUser!.displayName != displayName) {
+      auth.updateDisplayName(displayName);
+    }
+
     updateWith(isLoading: false);
 
     // if (_emailHasChanged && emailErrorText == null) {
