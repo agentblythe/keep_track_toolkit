@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/profile/profile_manager.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_page_form.dart';
-import 'package:keep_track_toolkit/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -12,7 +11,6 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var profileManager = Provider.of<ProfileManager>(context, listen: true);
-    var auth = Provider.of<AuthBase>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Profile'),
