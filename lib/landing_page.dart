@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:keep_track_toolkit/navigation/app_routes.dart';
+import 'package:keep_track_toolkit/profile/navigation/app_routes.dart';
 import 'package:keep_track_toolkit/screens/home/home_page.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_page.dart';
 import 'package:keep_track_toolkit/screens/sign-in/sign_in_page.dart';

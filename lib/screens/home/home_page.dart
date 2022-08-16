@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:keep_track_toolkit/common-widgets/show_alert_dialog.dart';
-import 'package:keep_track_toolkit/navigation/app_routes.dart';
+import 'package:keep_track_toolkit/profile/navigation/app_routes.dart';
 import 'package:keep_track_toolkit/profile/profile_manager.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
 import 'package:provider/provider.dart';

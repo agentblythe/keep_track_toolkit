@@ -10,6 +10,7 @@ import 'package:twitter_login/twitter_login.dart';
 abstract class AuthBase {
   User? get currentUser;
   Stream<User?> authStateChanges();
+  Stream<User?> userChanges();
   Future<void> signInWithEmailAndPassword(String email, String password);
   Future<void> createUserWithEmailAndPassword(String email, String password);
   Future<void> resetPassword(String email);
@@ -29,6 +30,9 @@ class Auth implements AuthBase {
 
   @override
   Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
+
+  @override
+  Stream<User?> userChanges() => _firebaseAuth.userChanges();
 
   @override
   Future<void> signInWithEmailAndPassword(String email, String password) async {
