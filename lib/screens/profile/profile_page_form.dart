@@ -5,6 +5,7 @@ import 'package:keep_track_toolkit/common-widgets/form_submit_button.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_cubit.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_change_model.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
+import 'package:keep_track_toolkit/utils/show_snack_bar.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePageForm extends StatefulWidget {
@@ -98,10 +99,11 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
     );
   }
 
-  Future<void> _submit(BuildContext context) async {
+  void _submit(BuildContext context) {
     context.read<ProfileCubit>().updateIsLoading(true);
-    await widget.auth
+    widget.auth
         .updateDisplayName(widget.model.displayName)
-        .then((value) => context.read<ProfileCubit>().updateIsLoading(false));
+        .then((value) => context.read<ProfileCubit>().updateIsLoading(false))
+        .then((value) => showSnackBar(context, "Changes Saved"));
   }
 }
