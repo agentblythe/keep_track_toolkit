@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/common-widgets/form_submit_button.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_change_model.dart';
@@ -14,9 +13,11 @@ class ProfilePageForm extends StatefulWidget {
   }) : super(key: key);
 
   static Widget create(BuildContext context) {
-    final auth = Provider.of<AuthBase>(context, listen: false);
+    final user = Provider.of<AuthBase>(context, listen: false).currentUser!;
     return ChangeNotifierProvider<ProfileChangeModel>(
-      create: (_) => ProfileChangeModel(user: auth.currentUser!),
+      create: (_) => ProfileChangeModel(
+        displayName: user.displayName,
+      ),
       child: Consumer<ProfileChangeModel>(
         builder: (_, model, __) => ProfilePageForm(
           model: model,
@@ -32,21 +33,6 @@ class ProfilePageForm extends StatefulWidget {
 class _ProfilePageFormState extends State<ProfilePageForm> {
   @override
   Widget build(BuildContext context) {
-    var auth = Provider.of<AuthBase>(context, listen: false);
-    return StreamBuilder<User?>(
-      builder: (context, snapshot) {
-        return ChangeNotifierProvider<ProfileChangeModel>(
-          create: (_) => ProfileChangeModel(user: auth.currentUser!),
-          child: Consumer<ProfileChangeModel>(
-            builder: (_, model, __) => _buildProfilePageForm(model),
-          ),
-        );
-      },
-      stream: auth.userChanges(),
-    );
-  }
-
-  Widget _buildProfilePageForm(ProfileChangeModel model) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -61,15 +47,15 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
     return [
       _buildDisplayNameTextField(),
       const SizedBox(height: 16),
-      const FormSubmitButton(
-        newChild: Text(
+      FormSubmitButton(
+        newChild: const Text(
           "Save Changes",
           style: TextStyle(
             color: Colors.white,
             fontSize: 20.0,
           ),
         ),
-        callback: null,
+        callback: widget.model.submit,
       ),
     ];
   }
