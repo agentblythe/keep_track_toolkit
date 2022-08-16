@@ -57,13 +57,15 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       _buildDisplayNameTextField(),
       const SizedBox(height: 16),
       FormSubmitButton(
-        newChild: const Text(
-          "Save Changes",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-          ),
-        ),
+        newChild: !widget.model.isLoading
+            ? const Text(
+                "Save Changes",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                ),
+              )
+            : const CircularProgressIndicator(),
         callback: widget.model.isLoading ? null : widget.model.submit,
       ),
     ];

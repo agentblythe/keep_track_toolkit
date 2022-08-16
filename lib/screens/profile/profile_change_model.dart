@@ -93,7 +93,7 @@ class ProfileChangeModel with ChangeNotifier {
     updateWith(isLoading: true);
 
     if (auth.currentUser!.displayName != displayName) {
-      auth.updateDisplayName(displayName);
+      await auth.updateDisplayName(displayName);
     }
 
     updateWith(isLoading: false);
