@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_validators.dart';
 import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_validators.dart';
-import 'package:keep_track_toolkit/services/auth.dart';
 
 enum SignInType { password, social, phone }
 
