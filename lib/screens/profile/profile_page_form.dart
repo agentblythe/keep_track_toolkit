@@ -23,6 +23,7 @@ class ProfilePageForm extends StatefulWidget {
         return ChangeNotifierProvider<ProfileChangeModel>(
           create: (_) => ProfileChangeModel(
             displayName: user.displayName,
+            auth: auth,
           ),
           child: Consumer<ProfileChangeModel>(
             builder: (_, model, __) => ProfilePageForm(

@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_validators.dart';
-import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_validators.dart';
-
+import 'package:keep_track_toolkit/services/auth.dart';
 //enum SignInType { password, social, phone }
 
 // class ProfileChangeValidators {
@@ -17,6 +14,7 @@ class ProfileChangeModel with ChangeNotifier {
   // String? phone;
   // SignInType? signInType;
   bool isLoading = false;
+  AuthBase auth;
 
   ProfileChangeModel({
     //required this.photoURL,
@@ -24,6 +22,7 @@ class ProfileChangeModel with ChangeNotifier {
     // required this.email,
     // required this.phone,
     // required this.signInType,
+    required this.auth,
   });
 
   // SignInType _getSignInType(String providerId) {
@@ -92,10 +91,6 @@ class ProfileChangeModel with ChangeNotifier {
 
   Future<void> submit() async {
     updateWith(isLoading: true);
-
-    // if (_displayNameHasChanged) {
-    //   //await auth.updateDisplayName(displayName);
-    // }
 
     updateWith(isLoading: false);
 
