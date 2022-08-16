@@ -16,7 +16,7 @@ class ProfileChangeModel with ChangeNotifier {
   // String? email;
   // String? phone;
   // SignInType? signInType;
-  // bool isLoading = false;
+  bool isLoading = false;
 
   ProfileChangeModel({
     //required this.photoURL,
@@ -41,13 +41,13 @@ class ProfileChangeModel with ChangeNotifier {
     String? displayName,
     // String? email,
     // String? phone,
-    // bool? isLoading,
+    bool? isLoading,
   }) {
     //this.photoURL = photoURL ?? this.photoURL;
     this.displayName = displayName ?? this.displayName;
     // this.email = email ?? this.email;
     // this.phone = phone ?? this.phone;
-    // this.isLoading = isLoading ?? this.isLoading;
+    this.isLoading = isLoading ?? this.isLoading;
     notifyListeners();
   }
 
@@ -91,13 +91,13 @@ class ProfileChangeModel with ChangeNotifier {
   // bool get _displayNameHasChanged => user.displayName != displayName;
 
   Future<void> submit() async {
-    //updateWith(isLoading: true);
+    updateWith(isLoading: true);
 
     // if (_displayNameHasChanged) {
     //   //await auth.updateDisplayName(displayName);
     // }
 
-    //updateWith(isLoading: false);
+    updateWith(isLoading: false);
 
     // if (_emailHasChanged && emailErrorText == null) {
     //   await _user.updateEmail(email!);

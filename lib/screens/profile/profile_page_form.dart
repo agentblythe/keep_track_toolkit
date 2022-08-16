@@ -63,7 +63,7 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
             fontSize: 20.0,
           ),
         ),
-        callback: widget.model.submit,
+        callback: widget.model.isLoading ? null : widget.model.submit,
       ),
     ];
   }
