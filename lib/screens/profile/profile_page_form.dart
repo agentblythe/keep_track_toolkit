@@ -75,7 +75,9 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       textInputAction: TextInputAction.next,
       //focusNode: _emailFocusNode,
       //onEditingComplete: () => _emailEditingComplete(),
-      onChanged: (newDisplayName) {},
+      onChanged: (newDisplayName) {
+        widget.model.updateWith(displayName: newDisplayName);
+      },
     );
   }
 }
