@@ -1,29 +1,33 @@
-import 'package:flutter/material.dart';
-import 'package:keep_track_toolkit/services/auth.dart';
-//enum SignInType { password, social, phone }
+import 'package:keep_track_toolkit/screens/sign-in/email_sign_in_validators.dart';
+import 'package:keep_track_toolkit/screens/sign-in/phone_sign_in_validators.dart';
 
-// class ProfileChangeValidators {
-//   final EmailValidator emailValidator = EmailValidator();
-//   final PhoneValidator phoneValidator = PhoneValidator();
-// }
+enum SignInType { password, social, phone }
 
-class ProfileChangeModel with ChangeNotifier {
-  //String? photoURL;
+class ProfileChangeValidators {
+  final EmailValidator emailValidator = EmailValidator();
+  final PhoneValidator phoneValidator = PhoneValidator();
+}
+
+class ProfileChangeModel with ProfileChangeValidators {
   String? displayName;
-  // String? email;
-  // String? phone;
-  // SignInType? signInType;
   bool isLoading = false;
-  AuthBase auth;
 
   ProfileChangeModel({
-    //required this.photoURL,
-    required this.displayName,
-    // required this.email,
-    // required this.phone,
-    // required this.signInType,
-    required this.auth,
+    this.displayName,
+    this.isLoading = false,
   });
+
+  ProfileChangeModel copyWith({
+    String? displayName,
+    bool? isLoading,
+  }) {
+    return ProfileChangeModel(
+      displayName: displayName ?? this.displayName,
+      isLoading: isLoading ?? this.isLoading,
+    );
+  }
+
+  bool get submitEnabled => !isLoading;
 
   // SignInType _getSignInType(String providerId) {
   //   if (providerId == "password") {
@@ -35,20 +39,29 @@ class ProfileChangeModel with ChangeNotifier {
   //   }
   // }
 
-  void updateWith({
-    //String? photoURL,
-    String? displayName,
-    // String? email,
-    // String? phone,
-    bool? isLoading,
-  }) {
-    //this.photoURL = photoURL ?? this.photoURL;
-    this.displayName = displayName ?? this.displayName;
-    // this.email = email ?? this.email;
-    // this.phone = phone ?? this.phone;
-    this.isLoading = isLoading ?? this.isLoading;
-    notifyListeners();
-  }
+  // ProfileChangeModel updateWith({
+  //   String? displayName,
+  //   bool? isLoading,
+  // }) {
+  //   this.displayName = displayName ?? this.displayName;
+  //   this.isLoading = isLoading ?? this.isLoading;
+  //   return this;
+  // }
+
+  // void updateWith({
+  //   //String? photoURL,
+  //   String? displayName,
+  //   // String? email,
+  //   // String? phone,
+  //   bool? isLoading,
+  // }) {
+  //   //this.photoURL = photoURL ?? this.photoURL;
+  //   this.displayName = displayName ?? this.displayName;
+  //   // this.email = email ?? this.email;
+  //   // this.phone = phone ?? this.phone;
+  //   this.isLoading = isLoading ?? this.isLoading;
+  //   //notifyListeners();
+  // }
 
   // bool get submitEnabled {
   //   bool result = true;
@@ -89,20 +102,20 @@ class ProfileChangeModel with ChangeNotifier {
 
   // bool get _displayNameHasChanged => user.displayName != displayName;
 
-  Future<void> submit() async {
-    updateWith(isLoading: true);
+  // Future<void> submit() async {
+  //   updateWith(isLoading: true);
 
-    if (auth.currentUser!.displayName != displayName) {
-      await auth.updateDisplayName(displayName);
-    }
+  //   if (auth.currentUser!.displayName != displayName) {
+  //     await auth.updateDisplayName(displayName);
+  //   }
 
-    updateWith(isLoading: false);
+  //   updateWith(isLoading: false);
 
-    // if (_emailHasChanged && emailErrorText == null) {
-    //   await _user.updateEmail(email!);
-    // }
-    // if (_phoneHasChanged && phoneErrorText == null) {
-    //   await _user.updatePhoneNumber(phoneCredential);
-    // }
-  }
+  //   // if (_emailHasChanged && emailErrorText == null) {
+  //   //   await _user.updateEmail(email!);
+  //   // }
+  //   // if (_phoneHasChanged && phoneErrorText == null) {
+  //   //   await _user.updatePhoneNumber(phoneCredential);
+  //   // }
+  // }
 }

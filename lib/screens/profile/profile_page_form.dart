@@ -1,16 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keep_track_toolkit/common-widgets/form_submit_button.dart';
+import 'package:keep_track_toolkit/screens/profile/profile_cubit.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_change_model.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePageForm extends StatefulWidget {
   final ProfileChangeModel model;
+  final AuthBase auth;
 
   const ProfilePageForm({
     Key? key,
     required this.model,
+    required this.auth,
   }) : super(key: key);
 
   static Widget create(BuildContext context) {
@@ -20,15 +24,17 @@ class ProfilePageForm extends StatefulWidget {
       stream: auth.userChanges(),
       initialData: user,
       builder: (context, snapshot) {
-        return ChangeNotifierProvider<ProfileChangeModel>(
-          create: (_) => ProfileChangeModel(
-            displayName: user.displayName,
-            auth: auth,
+        return BlocProvider(
+          create: (_) => ProfileCubit(
+            user: user,
           ),
-          child: Consumer<ProfileChangeModel>(
-            builder: (_, model, __) => ProfilePageForm(
-              model: model,
-            ),
+          child: BlocBuilder<ProfileCubit, ProfileChangeModel>(
+            builder: (context, profileChangeModel) {
+              return ProfilePageForm(
+                model: profileChangeModel,
+                auth: auth,
+              );
+            },
           ),
         );
       },
@@ -47,14 +53,14 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _buildChildren(),
+        children: _buildChildren(context),
       ),
     );
   }
 
-  List<Widget> _buildChildren() {
+  List<Widget> _buildChildren(BuildContext context) {
     return [
-      _buildDisplayNameTextField(),
+      _buildDisplayNameTextField(context),
       const SizedBox(height: 16),
       FormSubmitButton(
         newChild: !widget.model.isLoading
@@ -66,12 +72,12 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
                 ),
               )
             : const CircularProgressIndicator(),
-        callback: widget.model.isLoading ? null : widget.model.submit,
+        callback: widget.model.submitEnabled ? () => _submit(context) : null,
       ),
     ];
   }
 
-  Widget _buildDisplayNameTextField() {
+  Widget _buildDisplayNameTextField(BuildContext context) {
     return TextFormField(
       initialValue: widget.model.displayName,
       decoration: InputDecoration(
@@ -87,8 +93,15 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       //focusNode: _emailFocusNode,
       //onEditingComplete: () => _emailEditingComplete(),
       onChanged: (newDisplayName) {
-        widget.model.updateWith(displayName: newDisplayName);
+        context.read<ProfileCubit>().updateDisplayName(newDisplayName);
       },
     );
+  }
+
+  Future<void> _submit(BuildContext context) async {
+    context.read<ProfileCubit>().updateIsLoading(true);
+    await widget.auth
+        .updateDisplayName(widget.model.displayName)
+        .then((value) => context.read<ProfileCubit>().updateIsLoading(false));
   }
 }
