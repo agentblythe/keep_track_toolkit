@@ -10,28 +10,39 @@ class ProfileChangeValidators {
 
 class ProfileChangeModel with ProfileChangeValidators {
   String? displayName;
+  String? email;
   bool isLoading = false;
   SignInType? signInType;
 
   ProfileChangeModel({
     this.displayName,
+    this.email,
     this.isLoading = false,
     this.signInType,
   });
 
   ProfileChangeModel copyWith({
     String? displayName,
+    String? email,
     bool? isLoading,
     SignInType? signInType,
   }) {
     return ProfileChangeModel(
       displayName: displayName ?? this.displayName,
+      email: email ?? this.email,
       isLoading: isLoading ?? this.isLoading,
       signInType: signInType ?? this.signInType,
     );
   }
 
   bool get submitEnabled => !isLoading;
+
+  bool get emailEnabled {
+    if (signInType == SignInType.password) {
+      return false;
+    }
+    return (!isLoading);
+  }
 
   // ProfileChangeModel updateWith({
   //   String? displayName,

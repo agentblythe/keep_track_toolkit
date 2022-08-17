@@ -48,6 +48,7 @@ class ProfilePageForm extends StatefulWidget {
 
 class _ProfilePageFormState extends State<ProfilePageForm> {
   final FocusNode _displayNameFocusNode = FocusNode();
+  final FocusNode _emailFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +65,8 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
   List<Widget> _buildChildren(BuildContext context) {
     return [
       _buildDisplayNameTextField(context),
+      const SizedBox(height: 8),
+      _buildEmailTextField(context),
       const SizedBox(height: 16),
       FormSubmitButton(
         newChild: !widget.model.isLoading
@@ -102,6 +105,28 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
     );
   }
 
+  Widget _buildEmailTextField(BuildContext context) {
+    return TextFormField(
+      initialValue: widget.model.email,
+      decoration: InputDecoration(
+        labelText: "Email",
+        hintText: "joe.bloggs@email.com",
+        enabled: widget.model.emailEnabled,
+      ),
+      enableSuggestions: false,
+      autocorrect: false,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      focusNode: _emailFocusNode,
+      onEditingComplete: () => _emailEditingComplete(),
+      onChanged: (newEmail) {
+        context
+            .read<ProfileCubit>()
+            .updateDisplayName(newEmail == "" ? null : newEmail);
+      },
+    );
+  }
+
   void _submit(BuildContext context) {
     context.read<ProfileCubit>().updateIsLoading(true);
     widget.auth
@@ -111,4 +136,6 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
   }
 
   void _displayNameEditingComplete() {}
+
+  void _emailEditingComplete() {}
 }

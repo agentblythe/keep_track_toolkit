@@ -20,11 +20,16 @@ class ProfileCubit extends Cubit<ProfileChangeModel> {
     required this.user,
   }) : super(ProfileChangeModel(
           displayName: user.displayName,
+          email: user.email,
           signInType: _getSignInType(user),
         ));
 
   void updateDisplayName(String? displayName) {
     emit(state.copyWith(displayName: displayName));
+  }
+
+  void updateEmail(String? email) {
+    emit(state.copyWith(email: email));
   }
 
   void updateIsLoading(bool isLoading) {
