@@ -47,9 +47,6 @@ class ProfilePageForm extends StatefulWidget {
 }
 
 class _ProfilePageFormState extends State<ProfilePageForm> {
-  final FocusNode _displayNameFocusNode = FocusNode();
-  final FocusNode _emailFocusNode = FocusNode();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
