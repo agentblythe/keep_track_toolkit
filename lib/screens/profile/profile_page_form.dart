@@ -104,7 +104,8 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
     return TextFormField(
       initialValue: widget.model.email,
       decoration: InputDecoration(
-        labelText: "Email",
+        labelText:
+            "Email${!widget.model.emailEnabled ? " - You can't change this field" : ""}",
         hintText: "joe.bloggs@email.com",
         enabled: widget.model.emailEnabled,
       ),
