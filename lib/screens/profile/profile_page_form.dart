@@ -57,16 +57,16 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _buildChildren(context),
+        children: _buildChildren(),
       ),
     );
   }
 
-  List<Widget> _buildChildren(BuildContext context) {
+  List<Widget> _buildChildren() {
     return [
-      _buildDisplayNameTextField(context),
+      _buildDisplayNameTextField(),
       const SizedBox(height: 8),
-      _buildEmailTextField(context),
+      _buildEmailTextField(),
       const SizedBox(height: 16),
       FormSubmitButton(
         newChild: !widget.model.isLoading
@@ -78,12 +78,12 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
                 ),
               )
             : const CircularProgressIndicator(),
-        callback: widget.model.submitEnabled ? () => _submit(context) : null,
+        callback: widget.model.submitEnabled ? () => _submit() : null,
       ),
     ];
   }
 
-  Widget _buildDisplayNameTextField(BuildContext context) {
+  Widget _buildDisplayNameTextField() {
     return TextFormField(
       initialValue: widget.model.displayName,
       decoration: InputDecoration(
@@ -94,9 +94,8 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       enableSuggestions: false,
       autocorrect: false,
       keyboardType: TextInputType.name,
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
       focusNode: _displayNameFocusNode,
-      onEditingComplete: () => _displayNameEditingComplete(),
       onChanged: (newDisplayName) {
         context
             .read<ProfileCubit>()
@@ -105,7 +104,7 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
     );
   }
 
-  Widget _buildEmailTextField(BuildContext context) {
+  Widget _buildEmailTextField() {
     return TextFormField(
       initialValue: widget.model.email,
       decoration: InputDecoration(
@@ -116,9 +115,8 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       enableSuggestions: false,
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
       focusNode: _emailFocusNode,
-      onEditingComplete: () => _emailEditingComplete(),
       onChanged: (newEmail) {
         context
             .read<ProfileCubit>()
@@ -127,15 +125,11 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
     );
   }
 
-  void _submit(BuildContext context) {
+  void _submit() {
     context.read<ProfileCubit>().updateIsLoading(true);
     widget.auth
         .updateDisplayName(widget.model.displayName)
         .then((value) => context.read<ProfileCubit>().updateIsLoading(false))
         .then((value) => showSnackBar(context, "Changes Saved"));
   }
-
-  void _displayNameEditingComplete() {}
-
-  void _emailEditingComplete() {}
 }
