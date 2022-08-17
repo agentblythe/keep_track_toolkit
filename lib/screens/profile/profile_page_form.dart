@@ -92,7 +92,6 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       autocorrect: false,
       keyboardType: TextInputType.name,
       textInputAction: TextInputAction.done,
-      focusNode: _displayNameFocusNode,
       onChanged: (newDisplayName) {
         context
             .read<ProfileCubit>()
@@ -113,7 +112,6 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.done,
-      focusNode: _emailFocusNode,
       onChanged: (newEmail) {
         context
             .read<ProfileCubit>()
