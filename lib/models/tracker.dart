@@ -1,12 +1,13 @@
+import 'package:keep_track_toolkit/models/tracker_interval_type.dart';
 import 'package:keep_track_toolkit/models/tracker_type.dart';
 
 class Tracker<T> {
   List<Result<T>> values = [];
-  int interval;
+  TrackerIntervalType trackerIntervalType;
   TrackerType trackerType;
 
   Tracker({
-    required this.interval,
+    required this.trackerIntervalType,
     required this.trackerType,
   });
 
