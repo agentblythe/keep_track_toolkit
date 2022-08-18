@@ -14,11 +14,16 @@ class ProfileChangeModel with ProfileChangeValidators {
   bool isLoading = false;
   SignInType? signInType;
 
+  bool displayNameHasChanged = false;
+  bool emailHasChanged = false;
+
   ProfileChangeModel({
     this.displayName,
     this.email,
     this.isLoading = false,
     this.signInType,
+    this.displayNameHasChanged = false,
+    this.emailHasChanged = false,
   });
 
   ProfileChangeModel copyWith({
@@ -26,101 +31,32 @@ class ProfileChangeModel with ProfileChangeValidators {
     String? email,
     bool? isLoading,
     SignInType? signInType,
+    bool? displayNameHasChanged,
+    bool? emailHasChanged,
   }) {
     return ProfileChangeModel(
       displayName: displayName ?? this.displayName,
       email: email ?? this.email,
       isLoading: isLoading ?? this.isLoading,
       signInType: signInType ?? this.signInType,
+      displayNameHasChanged:
+          displayNameHasChanged ?? this.displayNameHasChanged,
+      emailHasChanged: emailHasChanged ?? this.emailHasChanged,
     );
   }
 
-  bool get submitEnabled => !isLoading;
+  bool get _noChanges {
+    return !displayNameHasChanged && !emailHasChanged;
+  }
+
+  bool get submitEnabled {
+    return !isLoading && !_noChanges;
+  }
 
   bool get emailEnabled {
-    if (signInType == SignInType.password) {
+    if (signInType == SignInType.social) {
       return false;
     }
     return (!isLoading);
   }
-
-  // ProfileChangeModel updateWith({
-  //   String? displayName,
-  //   bool? isLoading,
-  // }) {
-  //   this.displayName = displayName ?? this.displayName;
-  //   this.isLoading = isLoading ?? this.isLoading;
-  //   return this;
-  // }
-
-  // void updateWith({
-  //   //String? photoURL,
-  //   String? displayName,
-  //   // String? email,
-  //   // String? phone,
-  //   bool? isLoading,
-  // }) {
-  //   //this.photoURL = photoURL ?? this.photoURL;
-  //   this.displayName = displayName ?? this.displayName;
-  //   // this.email = email ?? this.email;
-  //   // this.phone = phone ?? this.phone;
-  //   this.isLoading = isLoading ?? this.isLoading;
-  //   //notifyListeners();
-  // }
-
-  // bool get submitEnabled {
-  //   bool result = true;
-  //   if ((_emailRequired || _emailHasChanged) && (email != null)) {
-  //     result = emailValidator.isValid(email!);
-  //   }
-  //   if ((_phoneRequired || _phoneHasChanged) && (phone != null)) {
-  //     result = result && phoneValidator.isValid(phone!);
-  //   }
-  //   return result && !isLoading;
-  // }
-
-  // bool get _emailRequired => signInType == SignInType.password;
-
-  // String? get emailErrorText {
-  //   if (_emailRequired || _emailHasChanged) {
-  //     if (email == null || !emailValidator.isValid(email!)) {
-  //       return emailValidator.error;
-  //     }
-  //   }
-  //   return null;
-  // }
-
-  // bool get _phoneRequired => signInType == SignInType.phone;
-
-  // String? get phoneErrorText {
-  //   if (_phoneRequired || _phoneHasChanged) {
-  //     if (phone == null || !phoneValidator.isValid(phone!)) {
-  //       return phoneValidator.error;
-  //     }
-  //   }
-  //   return null;
-  // }
-
-  // bool get _emailHasChanged => user.email != email;
-
-  // bool get _phoneHasChanged => user.phoneNumber != phone;
-
-  // bool get _displayNameHasChanged => user.displayName != displayName;
-
-  // Future<void> submit() async {
-  //   updateWith(isLoading: true);
-
-  //   if (auth.currentUser!.displayName != displayName) {
-  //     await auth.updateDisplayName(displayName);
-  //   }
-
-  //   updateWith(isLoading: false);
-
-  //   // if (_emailHasChanged && emailErrorText == null) {
-  //   //   await _user.updateEmail(email!);
-  //   // }
-  //   // if (_phoneHasChanged && phoneErrorText == null) {
-  //   //   await _user.updatePhoneNumber(phoneCredential);
-  //   // }
-  // }
 }

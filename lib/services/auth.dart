@@ -22,6 +22,7 @@ abstract class AuthBase {
   Future<void> signOut();
 
   Future<void> updateDisplayName(String? newDisplayName);
+  Future<void> updateEmail(String? newEmail);
 }
 
 class Auth implements AuthBase {
@@ -206,6 +207,13 @@ class Auth implements AuthBase {
 
   @override
   Future<void> updateDisplayName(String? newDisplayName) async {
-    await _firebaseAuth.currentUser?.updateDisplayName(newDisplayName);
+    await _firebaseAuth.currentUser!.updateDisplayName(newDisplayName);
+  }
+
+  @override
+  Future<void> updateEmail(String? newEmail) async {
+    if (newEmail != null) {
+      await _firebaseAuth.currentUser!.updateEmail(newEmail);
+    }
   }
 }

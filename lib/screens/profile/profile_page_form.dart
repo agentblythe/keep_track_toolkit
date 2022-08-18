@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keep_track_toolkit/common-widgets/form_submit_button.dart';
+import 'package:keep_track_toolkit/common-widgets/show_exception_alert_dialog.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_cubit.dart';
 import 'package:keep_track_toolkit/screens/profile/profile_change_model.dart';
 import 'package:keep_track_toolkit/services/auth.dart';
@@ -28,6 +29,7 @@ class ProfilePageForm extends StatefulWidget {
         return BlocProvider(
           create: (_) => ProfileCubit(
             user: user,
+            auth: auth,
           ),
           child: BlocBuilder<ProfileCubit, ProfileChangeModel>(
             builder: (context, profileChangeModel) {
@@ -93,9 +95,10 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       keyboardType: TextInputType.name,
       textInputAction: TextInputAction.done,
       onChanged: (newDisplayName) {
-        context
-            .read<ProfileCubit>()
-            .updateDisplayName(newDisplayName == "" ? null : newDisplayName);
+        var cubit = context.read<ProfileCubit>();
+        if (cubit.user.displayName != newDisplayName) {
+          cubit.updateDisplayName(newDisplayName == "" ? null : newDisplayName);
+        }
       },
     );
   }
@@ -104,8 +107,7 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
     return TextFormField(
       initialValue: widget.model.email,
       decoration: InputDecoration(
-        labelText:
-            "Email${!widget.model.emailEnabled ? " - You can't change this field" : ""}",
+        labelText: "Email",
         hintText: "joe.bloggs@email.com",
         enabled: widget.model.emailEnabled,
       ),
@@ -114,18 +116,27 @@ class _ProfilePageFormState extends State<ProfilePageForm> {
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.done,
       onChanged: (newEmail) {
-        context
-            .read<ProfileCubit>()
-            .updateDisplayName(newEmail == "" ? null : newEmail);
+        var cubit = context.read<ProfileCubit>();
+        if (cubit.user.email != newEmail) {
+          cubit.updateEmail(newEmail == "" ? null : newEmail);
+        }
       },
     );
   }
 
-  void _submit() {
-    context.read<ProfileCubit>().updateIsLoading(true);
-    widget.auth
-        .updateDisplayName(widget.model.displayName)
-        .then((value) => context.read<ProfileCubit>().updateIsLoading(false))
-        .then((value) => showSnackBar(context, "Changes Saved"));
+  void _submit() async {
+    var cubit = context.read<ProfileCubit>();
+
+    try {
+      cubit.submit().then((value) => showSnackBar(context, "Changes Saved"));
+    } on FirebaseAuthException catch (e) {
+      showExceptionAlertDialog(
+        context,
+        title: "Sign in failed",
+        exception: e,
+      );
+    } finally {
+      cubit.resetState();
+    }
   }
 }
