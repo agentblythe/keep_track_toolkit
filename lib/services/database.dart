@@ -1,4 +1,5 @@
 import 'package:keep_track_toolkit/models/tracker.dart';
+import 'package:keep_track_toolkit/services/firestore_service.dart';
 
 abstract class Database {
   // Read
@@ -7,7 +8,8 @@ abstract class Database {
 }
 
 class FireStoreDatabase implements Database {
-  //final _service = FireStoreService.instance;
+  final _service = FireStoreService.instance;
+  
   @override
   Stream<List<Tracker>> allTrackersStream() {
     throw UnimplementedError();
