@@ -18,7 +18,7 @@ class TrackerList extends StatelessWidget {
           snapshot: snapshot,
           itemBuilder: (context, tracker) {
             return Center(
-              child: Text(tracker.trackerType.name),
+              child: Text(tracker.name),
             );
           },
         );
