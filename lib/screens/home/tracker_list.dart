@@ -17,8 +17,10 @@ class TrackerList extends StatelessWidget {
         return ListItemsBuilder<Tracker>(
           snapshot: snapshot,
           itemBuilder: (context, tracker) {
-            return Center(
-              child: Text(tracker.name),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  "${tracker.name} / ${tracker.trackerIntervalType.name} / ${tracker.trackerType.name}"),
             );
           },
         );
