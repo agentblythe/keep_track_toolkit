@@ -38,7 +38,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Provider<Database>(
-        create: (_) => FireStoreDatabase(),
+        create: (_) => FirestoreDatabase(
+          uid: Provider.of<AuthBase>(context, listen: false).currentUser!.uid,
+        ),
         child: const TrackerList(),
       ),
     );

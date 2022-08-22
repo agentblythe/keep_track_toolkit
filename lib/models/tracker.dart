@@ -11,12 +11,38 @@ class Tracker<T> {
     required this.trackerType,
   });
 
+  Tracker._({
+    required this.values,
+    required this.trackerIntervalType,
+    required this.trackerType,
+  });
+
   void addValue(Result<T> value) {
     values.add(value);
   }
 
   void removeValueAtIndex(int index) {
     values.removeAt(index);
+  }
+
+  factory Tracker.fromMap(Map<String, dynamic> data, String documentId) {
+    final List<Result<T>> values = data['values'];
+    final int trackerIntervalType = data['trackerIntervalType'];
+    final int trackerType = data['trackerType'];
+
+    return Tracker._(
+      values: values,
+      trackerIntervalType: TrackerIntervalType.values[trackerIntervalType],
+      trackerType: TrackerType.values[trackerType],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'values': values,
+      'trackerIntervalType': trackerIntervalType,
+      'trackerType': trackerType,
+    };
   }
 }
 

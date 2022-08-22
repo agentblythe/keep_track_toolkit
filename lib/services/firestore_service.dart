@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FireStoreService {
-  FireStoreService._();
-  static final instance = FireStoreService._();
+class FirestoreService {
+  FirestoreService._();
+  static final instance = FirestoreService._();
 
   Stream<List<T>> collectionStream<T>({
     required String path,
