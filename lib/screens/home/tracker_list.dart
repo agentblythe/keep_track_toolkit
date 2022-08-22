@@ -20,7 +20,8 @@ class TrackerList extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                  "${tracker.name} / ${tracker.trackerIntervalType.name} / ${tracker.trackerType.name}"),
+                "${tracker.name} / ${tracker.trackerIntervalType.name} / ${tracker.trackerType.name} / ${tracker.values.length}",
+              ),
             );
           },
         );

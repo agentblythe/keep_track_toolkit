@@ -3,7 +3,7 @@ import 'package:keep_track_toolkit/models/tracker_type.dart';
 
 class Tracker<T> {
   String name;
-  //List<Result<T>> values = [];
+  List<T> values = [];
   TrackerIntervalType trackerIntervalType;
   TrackerType trackerType;
 
@@ -15,7 +15,7 @@ class Tracker<T> {
 
   Tracker._({
     required this.name,
-    // required this.values,
+    required this.values,
     required this.trackerIntervalType,
     required this.trackerType,
   });
@@ -30,12 +30,13 @@ class Tracker<T> {
 
   factory Tracker.fromMap(Map<String, dynamic> data, String documentId) {
     final String name = data['name'];
-    // final List<Result<T>> values = data['values'];
+    final List<T> values = data['values'];
     final int trackerIntervalType = data['trackerIntervalType'];
     final int trackerType = data['trackerType'];
 
     return Tracker._(
       name: name,
+      values: values,
       trackerIntervalType: TrackerIntervalType.values[trackerIntervalType],
       trackerType: TrackerType.values[trackerType],
     );
@@ -44,7 +45,7 @@ class Tracker<T> {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      // 'values': values,
+      'values': values,
       'trackerIntervalType': trackerIntervalType,
       'trackerType': trackerType,
     };
