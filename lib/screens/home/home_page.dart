@@ -37,6 +37,12 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          
+        },
+        child: const Icon(FontAwesomeIcons.plus),
+      ),
       body: Provider<Database>(
         create: (_) => FirestoreDatabase(
           uid: Provider.of<AuthBase>(context, listen: false).currentUser!.uid,

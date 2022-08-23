@@ -21,7 +21,7 @@ class TrackerList extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ListTile(
                 title: Text(tracker.name),
-                subtitle: Text(tracker.trackerType.name),
+                subtitle: Text(tracker.trackerType.description),
                 trailing: Text(tracker.values.length.toString()),
               ),
             );
