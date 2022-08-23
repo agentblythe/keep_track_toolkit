@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:keep_track_toolkit/models/tracker_interval_type.dart';
 import 'package:keep_track_toolkit/models/tracker_type.dart';
 
 class Tracker<T> {
   String name;
-  List<T> values = [];
+  List<Map<Timestamp, T>> values = [];
   TrackerIntervalType trackerIntervalType;
   TrackerType trackerType;
 
@@ -24,7 +25,8 @@ class Tracker<T> {
     final String name = data['name'];
     final int trackerIntervalType = data['trackerIntervalType'];
     final int trackerType = data['trackerType'];
-    final List<T> values = data['values'].cast<T>();
+    final List<Map<Timestamp, T>> values =
+        data['values'].cast<Map<Timestamp, T>>();
 
     return Tracker._(
       name: name,
@@ -42,14 +44,4 @@ class Tracker<T> {
       'trackerType': trackerType,
     };
   }
-}
-
-class Result<T> {
-  DateTime dateTime;
-  T result;
-
-  Result({
-    required this.dateTime,
-    required this.result,
-  });
 }
