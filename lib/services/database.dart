@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:keep_track_toolkit/models/tracker.dart';
 import 'package:keep_track_toolkit/services/api_path.dart';
 import 'package:keep_track_toolkit/services/firestore_service.dart';
 
 abstract class Database {
   // Read
-  Stream<List<Tracker>> allTrackersStream();
-  Stream<Tracker> singleTrackerStream({required String trackerId});
+  Stream<List<Tracker>> testAllTrackersStream();
+  // Stream<Tracker> singleTrackerStream({required String trackerId});
+  Stream<QuerySnapshot> allTrackersStream();
 }
 
 class FirestoreDatabase implements Database {
@@ -15,15 +17,16 @@ class FirestoreDatabase implements Database {
   final _service = FirestoreService.instance;
 
   @override
-  Stream<List<Tracker>> allTrackersStream() => _service.collectionStream(
-        path: APIPath.trackers(uid),
-        builder: (data, documentID) => Tracker.fromMap(data, documentID),
-      );
+  Stream<QuerySnapshot> allTrackersStream() {
+    return _service.getCollection(path: APIPath.trackers(uid)).snapshots();
+  }
 
   @override
-  Stream<Tracker> singleTrackerStream({required String trackerId}) =>
-      _service.documentStream(
-        path: APIPath.tracker(uid, trackerId),
-        builder: (data, documentID) => Tracker.fromMap(data, documentID),
-      );
+  Stream<List<Tracker>> testAllTrackersStream() {
+    return _service.collectionStream(
+        path: APIPath.trackers(uid),
+        builder: (data, documentID) {
+          return Tracker.fromMap(data, documentID);
+        });
+  }
 }
