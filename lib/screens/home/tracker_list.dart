@@ -14,12 +14,6 @@ class TrackerList extends StatelessWidget {
     return StreamBuilder<List<Tracker>>(
       stream: database.allTrackersStream(),
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Text('Something went wrong');
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading");
-        }
         return ListItemsBuilder<Tracker>(
           snapshot: snapshot,
           itemBuilder: (context, tracker) {
