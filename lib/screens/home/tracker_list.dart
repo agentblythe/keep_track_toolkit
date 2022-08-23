@@ -59,8 +59,10 @@ class TrackerList extends StatelessWidget {
           itemBuilder: (context, tracker) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "${tracker.name} / ${tracker.trackerIntervalType.name} / ${tracker.trackerType.name} / ${tracker.values.length}",
+              child: ListTile(
+                title: Text(tracker.name),
+                subtitle: Text(tracker.trackerType.name),
+                trailing: Text(tracker.values.length.toString()),
               ),
             );
           },

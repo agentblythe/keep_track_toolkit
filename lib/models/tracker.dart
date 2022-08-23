@@ -1,9 +1,9 @@
 import 'package:keep_track_toolkit/models/tracker_interval_type.dart';
 import 'package:keep_track_toolkit/models/tracker_type.dart';
 
-class Tracker {
+class Tracker<T> {
   String name;
-  List<int> values = [];
+  List<T> values = [];
   TrackerIntervalType trackerIntervalType;
   TrackerType trackerType;
 
@@ -24,7 +24,7 @@ class Tracker {
     final String name = data['name'];
     final int trackerIntervalType = data['trackerIntervalType'];
     final int trackerType = data['trackerType'];
-    List<int> values = data['values'].cast<int>();
+    final List<T> values = data['values'].cast<T>();
 
     return Tracker._(
       name: name,
