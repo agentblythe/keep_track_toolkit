@@ -5,9 +5,7 @@ import 'package:keep_track_toolkit/services/firestore_service.dart';
 
 abstract class Database {
   // Read
-  Stream<List<Tracker>> testAllTrackersStream();
-  // Stream<Tracker> singleTrackerStream({required String trackerId});
-  Stream<QuerySnapshot> allTrackersStream();
+  Stream<List<Tracker>> allTrackersStream();
 }
 
 class FirestoreDatabase implements Database {
@@ -17,12 +15,7 @@ class FirestoreDatabase implements Database {
   final _service = FirestoreService.instance;
 
   @override
-  Stream<QuerySnapshot> allTrackersStream() {
-    return _service.getCollection(path: APIPath.trackers(uid)).snapshots();
-  }
-
-  @override
-  Stream<List<Tracker>> testAllTrackersStream() {
+  Stream<List<Tracker>> allTrackersStream() {
     return _service.collectionStream(
         path: APIPath.trackers(uid),
         builder: (data, documentID) {

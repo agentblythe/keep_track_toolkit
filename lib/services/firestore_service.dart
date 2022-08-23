@@ -55,20 +55,4 @@ class FirestoreService {
       return builder(snapshot.data()!, snapshot.id);
     });
   }
-
-  // Future<void> deleteData({required String path}) async {
-  //   final reference = FirebaseFirestore.instance.doc(path);
-  //   await reference.delete();
-  // }
-
-  // Future<void> setData(
-  //     {required String path, required Map<String, dynamic> data}) async {
-  //   final reference = FirebaseFirestore.instance.doc(path);
-  //   await reference.set(data);
-  // }
-
-  CollectionReference<Map<String, dynamic>> getCollection(
-      {required String path}) {
-    return FirebaseFirestore.instance.collection(path); //.get();
-  }
 }
